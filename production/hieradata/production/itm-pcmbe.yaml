@@ -1,0 +1,153 @@
+classes:
+  - php
+  - apache::mod::rpaf
+  - apache::mod::status
+  - pcms_rpm
+  - nfsclient
+  - logrotate
+  - loggly::rsyslog
+#  - cron
+#  - ssh-key
+#############################################
+## Config PHP version and extensions 
+#############################################
+apache::mod::php::package_name: 'php-5.4.34-1.el6.remi'
+
+apache::mod::status::allow_from: ['127.0.0.1','::1','10.229.10.172']
+
+apache::mod::rpaf::proxy_ips: ['10.229.8.0/22']
+
+#apache::mpm_module: 'prefork'
+#apache::mod::prefork::startservers: 24
+#apache::mod::prefork::minspareservers: 8
+#apache::mod::prefork::maxspareservers: 20
+#apache::mod::prefork::serverlimit: 4096
+#apache::mod::prefork::maxclients: 4096
+#apache::mod::prefork::maxrequestsperchild: 8000
+#
+#apache::timeout: 15
+#apache::keepalive: 'Off'
+#apache::keepalive_timeout: 120
+#apache::max_keepalive_requests: 200
+#apache::log_level: 'error'
+
+php::extensions:
+- php-mcrypt-5.4.34-1.el6.remi 
+- php-pdo-5.4.34-1.el6.remi 
+- php-mysqlnd-5.4.34-1.el6.remi 
+- php-xml-5.4.34-1.el6.remi 
+- php-process-5.4.34-1.el6.remi 
+- php-pear-1.9.5-3.el6.remi
+- php-pecl-igbinary-1.2.1-1.el6.remi.5.4
+- libmemcached-last-1.0.18-2.el6.remi
+- libmemcached-last-libs-1.0.18-2.el6.remi
+- libevent-1.4.13-4.el6
+- php-pecl-memcached-2.1.0-7.el6.remi.5.4
+- php-pecl-redis-2.2.5-5.el6.remi.5.4
+- php-soap-5.4.34-1.el6.remi
+- php-xmlrpc-5.4.34-1.el6.remi
+- php-ldap-5.4.34-1.el6.remi
+- php-mbstring-5.4.34-1.el6.remi
+- autoconf-2.63-5.1.el6
+- automake-1.11.1-4.el6
+- t1lib-5.1.2-6.el6_2.1
+- libXpm-3.5.10-2.el6
+- php-devel-5.4.34-1.el6.remi
+- php-gd-5.4.34-1.el6.remi
+- php-pecl-oauth-1.2.3-4.el6.remi.5.4
+- php-pecl-mongo-1.5.7-1.el6.remi.5.4
+- libgearman-1.1.8-2.el6
+- php-pecl-gearman-1.1.2-2.el6.remi.5.4
+- php-pear-Auth-SASL-1.0.6-1.el6.remi.noarch
+- php-pear-Net-URL-1.0.15-6.el6.remi
+- php-pear-Net-Socket-1.0.14-1.el6.remi
+- php-pear-Net-SMTP-1.6.2-1.el6.remi
+- php-pear-HTTP-Request-1.4.4-4.el6.remi
+- php-pear-Mail-1.2.0-5.el6.remi
+- php-pear-Mail-Mime-1.8.9-1.el6.remi
+- php-pear-Net-DIME-1.0.2-5.el6.remi
+- php-pear-SOAP-0.13.0-3.el6.remi
+- php-pear-XML-Parser-1.3.4-6.el6.remi
+- php-pear-XML-RPC-1.5.5-2.el6.remi.noarch
+
+#################
+## Config Vhost
+#################
+apache::default_vhost: false
+apache::vhosts:
+  'pcms.ituremart.com':
+    port: 80
+    docroot: '/var/www/itruemart/pcms/public'
+    servername: 'pcms.itruemart.com'
+    serveraliases:
+      - 'pcms-corebus.itruemart.com'
+    setenvif: 'X-Forwarded-For "^.+" forwarded'
+    serveradmin: 'admin@itruemart.com'
+    error_log_file: 'pcms.itruemart.com-error.log'
+    error_log_extra: '|logger -t apache-error_pcms.itruemart.com -p local5.err'
+    access_log_file: 'pcms.itruemart.com-access.log'
+    directories:
+      path: '/var/www/itruemart/pcms/public'
+      order: 'Deny,Allow'
+      allow: 'from all'
+      options: 
+        - '-Indexes'
+        - FollowSymLinks
+      allow_override: 'All'
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/pcms/application.log'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+        postrotate: '/etc/init.d/rsyslog stop && rm -rf /var/spool/rsyslog/stat-* && /etc/init.d/rsyslog start'
+    'httpd':
+        path: '/var/log/httpd/*log'
+        rotate: 7
+        maxage: 7
+        rotate_every: 'day'
+        missingok: true
+        compress: true
+        ifempty: false
+        sharedscripts: true
+        postrotate: '/sbin/service httpd reload > /dev/null 2>/dev/null || true'
+
+#################
+## NFS Client
+#################
+nfsclient::device: 'nfs-server:/data/product/itruemart/pcms'
+nfsclient::directory: '/data/storage/pcms'
+nfsclient::domain: 'itruemart.com'
+
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'production'
+loggly::rsyslog::logfiles:
+    'itm-pcmbe_application.log':
+        logname:  'itm-pcmbe_application.log'
+        filepath: '/data/log/pcms/application.log'
+
+#############################################
+## Config cron
+#############################################
+#cron::crontabs:
+#  'cron clear memory':
+#    command: 'echo 3 > /proc/sys/vm/drop_caches'
+#    user:    'root'
+#    hour:    '2'
+#    minute:  '0'

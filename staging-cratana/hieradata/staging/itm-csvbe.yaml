@@ -1,0 +1,8 @@
+classes:
+  - nginx_itruemart_cache_service
+  - php_phalcon_nginx_wemall_cache_service
+  - cache-service_rpm
+#########################
+## Config Nginx version
+#########################
+nginx_wemall_general_api::package_name: 'nginx-1.8.0-1.el6.ngx'

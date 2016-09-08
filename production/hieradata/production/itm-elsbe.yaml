@@ -1,0 +1,16 @@
+classes:
+  - elasticsearch
+
+################################
+## Elasticsearch Configuration
+################################
+elasticsearch::package_name: 'elasticsearch-1.4.0-1'
+elasticsearch::java_install: true
+elasticsearch::java_package: 'jre1.8.0_25-1.8.0_25-fcs'
+elasticsearch::instance:
+  'es01':
+    config:
+      'discovery.zen.ping.multicast.enabled': 'false'
+      'index.number_of_shards': '2'
+      'discovery.zen.ping.multicast.enabled': 'false'
+      'discovery.zen.ping.unicast.hosts': '["awsp-iitm-elsbe01.itruemart-dev.com:9300", "awsp-iitm-elsbe02.itruemart-dev.com:9300"]'

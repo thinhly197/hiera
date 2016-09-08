@@ -1,0 +1,64 @@
+classes:
+  - php
+  - api
+
+#############################################
+## Config PHP version and extensions 
+#############################################
+apache::mod::php::package_name: 'php-5.3.23-1.el6.remi'
+php::extensions:
+- php-pdo-5.3.23-1.el6.remi
+- php-mysqlnd-5.3.23-1.el6.remi
+- libmemcached-last-1.0.18-2.el6.remi
+- libmemcached-last-libs-1.0.18-2.el6.remi
+- php-xml-5.3.23-1.el6.remi
+- php-process-5.3.23-1.el6.remi
+- php-pear-1.9.5-3.el6.remi
+- php-pecl-igbinary-1.1.1-3.el6.remi
+- libevent-1.4.13-4.el6
+- php-pecl-memcached-2.1.0-6.el6.remi
+- php-mcrypt-5.3.23-1.el6.remi
+- libgearman-0.14-3.el6.2
+- php-pecl-gearman-0.8.3-1.el6.remi
+- php-gd-5.3.23-1.el6.remi
+- php-devel-5.3.23-1.el6.remi
+- php-ldap-5.3.23-1.el6.remi
+- php-mbstring-5.3.23-1.el6.remi
+- php-soap-5.3.23-1.el6.remi
+- php-xmlrpc-5.3.23-1.el6.remi
+- php-pear-Auth-SASL-1.0.6-1.el6.remi.noarch
+- php-pear-Net-URL-1.0.15-6.el6.remi
+- php-pear-Net-Socket-1.0.14-1.el6.remi
+- php-pear-Net-SMTP-1.6.2-1.el6.remi
+- php-pear-HTTP-Request-1.4.4-4.el6.remi
+- php-pear-Mail-1.2.0-5.el6.remi
+- php-pear-Mail-Mime-1.8.9-1.el6.remi
+- php-pear-Net-DIME-1.0.2-5.el6.remi
+- php-pear-SOAP-0.13.0-3.el6.remi
+- php-pear-XML-Parser-1.3.4-6.el6.remi
+- php-pear-XML-RPC-1.5.5-2.el6.remi.noarch
+- php-pear-XML-Serializer-0.20.2-8.el6.remi
+- php-pecl-mongo-1.3.1-1.el6.remi
+- php-pecl-oauth-1.2.3-1.el6.remi
+ 
+#################
+## Config Vhost 
+#################
+apache::default_vhost: false
+apache::vhosts:
+  'api.ituremart.com':  
+    port: 80
+    docroot: '/var/www/alpha-api.itruemart-dev.com/api' 
+    servername: 'alpha-api.itruemart-dev.com'
+    serveradmin: 'admin@itruemart-dev.com'
+    error_log_file: 'alpha-api.itruemart-dev.com-error.log'
+    error_log_extra: '|logger -t apache-error_alpha-api.itruemart-dev.com -p local5.err'
+    access_log_file: 'alpha-api.itruemart-dev.com-access.log'
+    directories:
+      path: '/var/www/alpha-api.itruemart-dev.com/api'
+      order: 'Deny,Allow'
+      allow: 'from all'
+      options: 
+        - Indexes
+        - FollowSymLinks
+      allow_override: 'All'

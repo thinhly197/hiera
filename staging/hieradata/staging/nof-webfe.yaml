@@ -1,0 +1,3 @@
+classes:
+  - nginx_wemall_notification_cms
+  - notification-cms_rpm

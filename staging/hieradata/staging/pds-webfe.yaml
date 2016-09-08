@@ -1,0 +1,3 @@
+classes:
+  - nginx_wemall_pds_backoffice
+  - pds-backoffice_rpm

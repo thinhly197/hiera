@@ -1,0 +1,4 @@
+classes:
+  - nginx_wemall_order_api
+  - php_phalcon_nginx_wemall
+  - order-api_rpm

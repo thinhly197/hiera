@@ -1,0 +1,101 @@
+classes :
+  - apimanager
+
+apimanager::software_name: "wso2am-1.9.1"
+apimanager::username: "apiadmin"
+apimanager::group: "apiadm"
+apimanager::component_name: "publisher-store"
+apimanager::package_java: "jdk"
+apimanager::package_java_version: "1.7.0_75-fcs"
+
+################################
+## Config publisher/Store
+################################
+apimanager::wso2_username: "admin"
+apimanager::wso2_password: "admin"
+
+################################
+## api-manager.xml
+################################
+## AuthManager
+apimanager::authmanager_serverurl: "https://alpha-apis-keystore.wemall-dev.com:9443/services/"
+apimanager::removeoauthheadersfromoutmessage: "false"
+## APIGateway
+apimanager::apigateway_serverurl: "https://alpha-apis-gateway.wemall-dev.com:9443/services/"
+apimanager::apigateway_gatewayendpoint: "http://alpha-apis-gateway.wemall-dev.com:8280,https://alpha-apis-gateway.wemall-dev.com:8243"
+apimanager::apigateway_enablegatewaykeycache: "false"
+## APIKeyValidator
+apimanager::apikeyvalidator_serverurl: "https://alpha-apis-keystore.wemall-dev.com:9443/services/"
+apimanager::apikeyvalidator_enablejwtcache: "false"
+apimanager::apikeyvalidator_enablekeymgtvalidationinfocache: "false"
+apimanager::apikeyvalidator_keyvalidatorclienttype: "WSClient"
+apimanager::apikeyvalidator_revokeapiurl: "https://alpha-apis-gateway.wemall-dev.com:8243/revoke"
+## APIKeyManager
+apimanager::apikeymanager_serverurl: "https://alpha-apis-keystore.wemall-dev.com:9443/services/"
+## CORSConfiguration
+apimanager::access_control_allow_origin: "http://localhost:3000,http://alpha-apis-gateway.wemall-dev.com,https://alpha-apis-gateway.wemall-dev.com,http://sandbox-products-cms.wemall-dev.com,http://alpha-products-cms.wemall-dev.com,http://sandbox-products-cms.wemall-dev.com,http://alpha-products-cms.wemall-dev.com,http://alpha-www.wemall-dev.com,http://alpha-portal-cms.wemall-dev.com,http://alpha-storefront-cms.wemall-dev.com"
+apimanager::access_control_allow_headers: "authorization,Access-Control-Allow-Origin,X-Requested-With,Content-Type"
+################################
+## axis2.xml
+################################
+## messageFormatter
+apimanager::messageformatter_class: "JsonStreamFormatter"
+## messageBuilder
+apimanager::messagebuilder_class: "JsonStreamBuilder"
+## transportSender
+apimanager::transportsender_hostnameverifier: "AllowAll"
+
+################################
+## axis2_client.xml
+################################
+## HTTP
+apimanager::http_so_timeout: "600000"
+apimanager::http_connection_timeout: "600000"
+## HTTPS
+apimanager::https_so_timeout: "600000"
+apimanager::https_connection_timeout: "600000"
+
+################################
+## master-datasources.xml
+################################
+## WSO2AM_DB
+apimanager::wso2am_db_username: "wso2"
+apimanager::wso2am_db_password: "wso2puppet"
+apimanager::wso2am_db_url: "jdbc:mysql://wso2-test-puppet.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/apimgtdb?autoReconnect=true"
+apimanager::wso2am_db_driverclassname: "com.mysql.jdbc.Driver"
+## WSO2UM_DB
+apimanager::wso2um_db_username: "wso2"
+apimanager::wso2um_db_password: "wso2puppet"
+apimanager::wso2um_db_url: "jdbc:mysql://wso2-test-puppet.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/userdb?autoReconnect=true"
+apimanager::wso2um_db_driverclassname: "com.mysql.jdbc.Driver"
+## WSO2REG_DB
+apimanager::wso2reg_db_username: "wso2"
+apimanager::wso2reg_db_password: "wso2puppet"
+apimanager::wso2reg_db_url: "jdbc:mysql://wso2-test-puppet.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/regdb?autoReconnect=true"
+apimanager::wso2reg_db_driverclassname: "com.mysql.jdbc.Driver"
+
+################################
+## registry.xml
+################################
+## remoteInstance
+apimanager::remoteinstance_url: "https://govregistry.apim-wso2.com"
+apimanager::remoteinstance_id: "gov"
+apimanager::remoteinstance_dbconfig: "govregistry"
+## mount
+apimanager::mount_path: "/_system/governance"
+apimanager::mount_overwrite: "true"
+apimanager::mount_instanceid: "gov"
+apimanager::mount_targetpath: "/_system/governance"
+
+################################
+## user-mgt.xml
+################################
+apimanager::usermanager_adminrole: "admin"
+apimanager::usermanager_everyonerolename: "everyone"
+apimanager::usermanager_datasource: "jdbc/WSO2UM_DB"
+
+################################
+## Package
+################################
+#apimanager::package_name: ""
+#apimanager::package_version: ""

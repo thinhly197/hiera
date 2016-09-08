@@ -1,0 +1,4 @@
+classes:
+  - nginx_wemall_api_storefront
+  - php_phalcon_nginx_wemall
+  - storefront-api_rpm

@@ -1,0 +1,217 @@
+classes:
+  - php
+  - apache::mod::rpaf
+  - apache::mod::status
+  - itruemart_rpm
+#  - nfsclient
+  - loggly::rsyslog
+  - logrotate
+#  - cron
+#  - gluster::client
+
+#############################################
+## Config PHP version and extensions 
+#############################################
+apache::mod::php::package_name: 'php-5.3.23-1.el6.remi'
+
+apache::mod::status::allow_from: ['127.0.0.1','::1','10.229.10.172']
+
+apache::mod::rpaf::proxy_ips: ['10.229.8.0/22']
+
+#apache::mpm_module: 'prefork'
+#apache::mod::prefork::startservers: 24
+#apache::mod::prefork::minspareservers: 8
+#apache::mod::prefork::maxspareservers: 20
+#apache::mod::prefork::serverlimit: 4096
+#apache::mod::prefork::maxclients: 4096
+#apache::mod::prefork::maxrequestsperchild: 8000
+#
+#apache::timeout: 15
+#apache::keepalive: 'Off'
+#apache::keepalive_timeout: 120
+#apache::max_keepalive_requests: 200
+#apache::log_level: 'error'
+
+php::extensions:
+- mod_ssl-2.2.15-39.el6.centos
+- php-pdo-5.3.23-1.el6.remi
+- php-mysqlnd-5.3.23-1.el6.remi
+- libmemcached-last-1.0.18-2.el6.remi
+- libmemcached-last-libs-1.0.18-2.el6.remi
+- php-xml-5.3.23-1.el6.remi
+- php-process-5.3.23-1.el6.remi
+- php-pear-1.9.5-3.el6.remi
+- php-pecl-igbinary-1.1.1-3.el6.remi
+- libevent-1.4.13-4.el6
+- php-pecl-memcached-2.1.0-6.el6.remi
+- php-mcrypt-5.3.23-1.el6.remi
+- libgearman-0.14-3.el6.2
+- php-pecl-gearman-0.8.3-1.el6.remi
+- php-gd-5.3.23-1.el6.remi
+- php-devel-5.3.23-1.el6.remi
+- php-ldap-5.3.23-1.el6.remi
+- php-mbstring-5.3.23-1.el6.remi
+- php-soap-5.3.23-1.el6.remi
+- php-xmlrpc-5.3.23-1.el6.remi
+- php-pear-Auth-SASL-1.0.6-1.el6.remi.noarch
+- php-pear-Net-URL-1.0.15-6.el6.remi
+- php-pear-Net-Socket-1.0.14-1.el6.remi
+- php-pear-Net-SMTP-1.6.2-1.el6.remi
+- php-pear-HTTP-Request-1.4.4-4.el6.remi
+- php-pear-Mail-1.2.0-5.el6.remi
+- php-pear-Mail-Mime-1.8.9-1.el6.remi
+- php-pear-Net-DIME-1.0.2-5.el6.remi
+- php-pear-SOAP-0.13.0-3.el6.remi
+- php-pear-XML-Parser-1.3.4-6.el6.remi
+- php-pear-XML-RPC-1.5.5-2.el6.remi.noarch
+- php-pear-XML-Serializer-0.20.2-8.el6.remi
+- php-pecl-mongo-1.3.1-1.el6.remi
+- php-pecl-oauth-1.2.3-1.el6.remi
+  
+#################
+## Config Vhost 
+#################
+
+apache::default_vhost: false
+apache::vhosts:
+  'www.ituremart.com':
+    port: 80
+    docroot: '/var/www/itruemart/itruemart/public'
+    servername: 'www.itruemart.com'
+    serveradmin: 'admin@itruemart.com'
+    serveraliases:
+      - 'www.itruemart.com'
+      - 'm.itruemart.com'
+      - 'www2.itruemart.com'
+      - 'm2.itruemart.com'
+    setenvif: 'X-Forwarded-For "^.+" forwarded'
+    error_log_file: 'www.itruemart.com-error.log'
+    error_log_extra: '|logger -t apache-error_www.itruemart.com -p local5.err'
+    access_log_file: 'www.itruemart.com-access.log'
+    aliases:
+      -
+        alias: '/files'
+        path: '/data/storage/itruemart/files'
+      -
+        alias: '/data'
+        path: '/data/storage/itruemart/data'
+    directories:
+      path: '/var/www/itruemart'
+      order: 'Deny,Allow'
+      allow: 'from all'
+      options:
+        - FollowSymLinks
+      allow_override: 'All'
+
+  'ssl-www.ituremart.com':
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/httpd/ssl/STAR_itruemart_com.crt'
+    ssl_key: '/etc/httpd/ssl/itruemart.com_nopass.key'
+    ssl_ca: '/etc/httpd/ssl/itruemartbundle.crt'
+    ssl_certs_dir: ~
+    ssl_cipher: 'ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW'
+    docroot: '/var/www/itruemart/itruemart/public'
+    servername: 'www.itruemart.com'
+    serveradmin: 'admin@itruemart.com'
+    serveraliases:
+      - 'www.itruemart.com'
+      - 'm.itruemart.com'
+      - 'www2.itruemart.com'
+      - 'm2.itruemart.com'
+    setenvif: 'X-Forwarded-For "^.+" forwarded'
+    error_log_file: 'ssl-www.itruemart.com-error.log'
+    error_log_extra: '|logger -t ssl-apache-error_www.itruemart.com -p local5.err'
+    access_log_file: 'ssl-www.itruemart.com-access.log'
+    aliases:
+      -
+        alias: '/files'
+        path: '/data/storage/itruemart/files'
+      -
+        alias: '/data'
+        path: '/data/storage/itruemart/data'
+    directories:
+      path: '/var/www/itruemart'
+      order: 'Deny,Allow'
+      allow: 'from all'
+      options:
+        - FollowSymLinks
+      allow_override: 'All'
+
+##########################
+## Gluster configuration
+##########################
+#gluster::client::client_package: 'glusterfs-fuse-3.6.1-1.el6'
+#gluster::mount:
+#  '/gluster/data':
+#    volume: 'cmtp-istl-gfsfe01:/itruemart'
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/itruemart/application.log'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+        postrotate: '/etc/init.d/rsyslog stop && rm -rf /var/spool/rsyslog/stat-* && /etc/init.d/rsyslog start'
+#### Orm Edit
+#        path: '/var/www/itruemart/itruemart/app/storage/nfs/logs/*.txt'
+#        rotate: 10
+#        size: 1M
+#        rotate_every: 'hour'
+#        compress: true
+#        ifempty: false
+#        create: false
+#        postrotate: '/etc/init.d/httpd reload > /dev/null'
+#### End of Orm Edit
+        # prerotate: 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then
+        #                 run-parts /etc/logrotate.d/httpd-prerotate;
+        #             fi;'
+    'httpd':
+        path: '/var/log/httpd/*log'
+        rotate: 7
+        maxage: 7
+        rotate_every: 'day'
+        missingok: true
+        compress: true
+        ifempty: false
+        sharedscripts: true
+        postrotate: '/sbin/service httpd reload > /dev/null 2>/dev/null || true'
+
+#################
+## NFS Client
+#################
+#nfsclient::device: 'nfs-server:/data/product/itruemart/2014/apps/storage'
+nfsclient::device: 'nfs-server:/data/product/itruemart/itruemart'
+nfsclient::directory: '/data/storage/itruemart'
+nfsclient::domain: 'itruemart.com'
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'production'
+loggly::rsyslog::logfiles:
+    'itm-webfe_application.log':
+        logname:  'itm-webfe_application.log'
+        filepath: '/data/log/itruemart/application.log'
+
+#############################################
+## Config cron
+#############################################
+#cron::crontabs:
+#  'cron clear memory':
+#    command: 'echo 3 > /proc/sys/vm/drop_caches'
+#    user:    'root'
+#    hour:    '2'
+#    minute:  '0'

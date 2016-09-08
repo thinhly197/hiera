@@ -1,0 +1,4 @@
+classes:
+  - java
+  - log4j
+  - logstash

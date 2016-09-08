@@ -1,0 +1,4 @@
+classes:
+  - nginx_wemall_cart_cms
+#  - php_phalcon_nginx_wemall
+  - cart-cms_rpm

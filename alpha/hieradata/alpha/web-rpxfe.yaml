@@ -1,0 +1,103 @@
+classes:
+  - nginx_reverseproxy_wemall
+
+nginx_reverseproxy_wemall::package_name: 'nginx-1.8.0-1.el6.ngx'
+# ###########################
+# ###### NGINX VHosts #######
+# ###########################
+# nginx::nginx_vhosts:
+#   'alpha-www.itruemart-dev.com':
+#     www_root: '/var/www'
+#     use_default_location: false
+#     error_log: '/var/log/nginx/alpha-www.itruemart-dev.com-error.log error'
+#     vhost_cfg_append: 
+#       'set_real_ip_from': '10.229.12.0/22'
+#       'real_ip_header': 'X-Forwarded-For'
+#       'real_ip_recursive': 'on'
+
+#   'alpha-m.itruemart-dev.com':
+#     www_root: '/var/www'
+#     use_default_location: false
+#     error_log: '/var/log/nginx/alpha-m.itruemart-dev.com-error.log error'
+#     vhost_cfg_append: 
+#       'set_real_ip_from': '10.229.12.0/22'
+#       'real_ip_header': 'X-Forwarded-For'
+#       'real_ip_recursive': 'on'
+
+#   'alpha-www.wemall-dev.com':
+#     www_root: '/var/www'
+#     use_default_location: false
+#     error_log: '/var/log/nginx/alpha-www.wemall-dev.com-error.log error'
+#     vhost_cfg_append: 
+#       'set_real_ip_from': '10.229.12.0/22'
+#       'real_ip_header': 'X-Forwarded-For'
+#       'real_ip_recursive': 'on'
+
+#   'alpha-m.wemall-dev.com':
+#     www_root: '/var/www'
+#     use_default_location: false
+#     error_log: '/var/log/nginx/alpha-m.wemall-dev.com-error.log error'
+#     vhost_cfg_append: 
+#       'set_real_ip_from': '10.229.12.0/22'
+#       'real_ip_header': 'X-Forwarded-For'
+#       'real_ip_recursive': 'on'
+
+# ###########################
+# ##### NGINX Locations #####
+# ###########################
+# nginx::nginx_locations:
+#   'alpha-www.itruemart-dev.com-01':
+#     vhost: 'alpha-www.itruemart-dev.com'
+#     location: '~ ^\/$'
+#     priority: 501
+#     location_custom_cfg:
+#       'return 301': 'http://alpha-www.wemall-dev.com/itruemart$request_uri'
+
+#   'alpha-www.itruemart-dev.com-02':
+#     vhost: 'alpha-www.itruemart-dev.com'
+#     location: '~ ^\/(.*)'
+#     priority: 401
+#     location_custom_cfg:
+#       'return 301': 'http://alpha-www.wemall-dev.com$request_uri'
+
+#   'alpha-m.itruemart-dev.com-03':
+#     vhost: 'alpha-m.itruemart-dev.com'
+#     location: '~ ^\/$'
+#     priority: 501
+#     location_custom_cfg:
+#       'return 301': 'http://alpha-m.wemall-dev.com/itruemart$request_uri'
+
+#   'alpha-m.itruemart-dev.com-04':
+#     vhost: 'alpha-m.itruemart-dev.com'
+#     location: '~ ^\/(.*)'
+#     priority: 401
+#     location_custom_cfg:
+#       'return 301': 'http://alpha-m.wemall-dev.com$request_uri'
+
+#   'alpha-www.wemall-dev.com-05':
+#     vhost: 'alpha-www.wemall-dev.com'
+#     location: '~ ^\/(en\/$|en$|shop\/(.*)|en\/shop\/(.*)|$)'
+#     priority: 501
+#     location_custom_cfg:
+#       'proxy_pass': 'http://alpha-www.wemall-dev.com'
+
+#   'alpha-www.wemall-dev.com-06':
+#     vhost: 'alpha-www.wemall-dev.com'
+#     location: '~ ^\/(.*)'
+#     priority: 401
+#     location_custom_cfg:
+#       'proxy_pass': 'http://alpha-www.itruemart-dev.com'
+
+#   'alpha-m.wemall-dev.com-07':
+#     vhost: 'alpha-m.wemall-dev.com'
+#     location: '~ ^\/(en\/$|en$|shop\/(.*)|en\/shop\/(.*)|$)'
+#     priority: 501
+#     location_custom_cfg:
+#       'proxy_pass': 'http://alpha-m.wemall-dev.com'
+
+#   'alpha-m.wemall-dev.com-08':
+#     vhost: 'alpha-m.wemall-dev.com'
+#     location: '~ ^\/(.*)'
+#     priority: 401
+#     location_custom_cfg:
+#       'proxy_pass': 'http://alpha-m.itruemart-dev.com'

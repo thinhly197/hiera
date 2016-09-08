@@ -1,0 +1,26 @@
+classes:
+  - nfsserver
+
+#####NFS Configuration####
+##### Mount Disk ##########
+nfsserver::main_directory: '/data/product/itruemart/'
+nfsserver::main_devblock: '/dev/xvdk1'
+nfsserver::spc_directory: '/data/product/scapi/'
+nfsserver::spc_devblock: '/dev/xvdj1'
+
+##### Exports File ######
+nfsserver::pcms_subnet: '10.229.0.0/21'
+nfsserver::pcms_mount_path: '/data/product/itruemart/pcms/'
+nfsserver::itruemart_subnet: '10.229.0.0/21'
+nfsserver::itruemart_mount_path: '/data/product/itruemart/itruemart/'
+nfsserver::cdn_subnet: '10.229.0.0/21'
+nfsserver::cdn_mount_path: '/data/product/itruemart/'
+nfsserver::search_api_subnet: '10.229.0.0/21'
+nfsserver::search_api_mount_path: '/data/product/itruemart/search-api/'
+nfsserver::web_api_subnet: '10.229.0.0/21'
+nfsserver::web_api_mount_path: '/data/product/itruemart/web-api/'
+nfsserver::pcw_subnet: '10.229.0.0/21'
+nfsserver::pcw_mount_path: '/data/product/itruemart/'
+nfsserver::spc_subnet: '10.229.0.0/21'
+nfsserver::spc_mount_path: '/data/product/scapi/'
+

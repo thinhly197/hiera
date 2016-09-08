@@ -1,0 +1,4 @@
+classes:
+  - java
+  - tomcat8
+  - inventory-api_rpm

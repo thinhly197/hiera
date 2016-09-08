@@ -1,0 +1,27 @@
+classes:
+  - nginx_reverseproxy_tyk
+
+########################################
+## Config reverseproxy tyk Parameters ##
+########################################
+nginx_reverseproxy_tyk::config::server_name: 'apis-gateway.wemall.com'
+nginx_reverseproxy_tyk::config::web_api: 'web-api.wemall.com'
+nginx_reverseproxy_tyk::config::third_party_api: 'api.wemall.com'
+nginx_reverseproxy_tyk::config::proxy_pass: 'http://apis-tyk.wemall.com'
+
+##########################
+##      real ip         ##
+##########################
+nginx_reverseproxy_tyk::config::set_real_ip_from: '10.229.8.0/22'
+nginx_reverseproxy_tyk::config::real_ip_header: 'X-Forwarded-For'
+nginx_reverseproxy_tyk::config::real_ip_recursive: 'on'
+
+##########################
+##     DNS resolver     ##
+##########################
+nginx_reverseproxy_tyk::config::dns_resolver: '10.229.8.2'
+
+##########################
+##     Monitoring IP    ## Actually is App Manager IP
+##########################
+nginx_reverseproxy_tyk::config::monitor_ip: '10.229.10.172/32'

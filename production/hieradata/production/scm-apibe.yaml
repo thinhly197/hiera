@@ -1,0 +1,24 @@
+classes:
+  - java
+  - tomcat_common
+  - supplychain-api_rpm
+
+tomcat_common::tomcat_version: "8.0.23"
+tomcat_common::tomcat_build_no: "-43"
+
+#############################################
+## Config Logrotate
+#############################################
+#logrotate::rule:
+#    'catalina_log':
+#        path: '/opt/apache-tomcat/apache-tomcat-8.0.23/logs/catalina.out'
+#        rotate: 7
+#        rotate_every: 'day'
+#        compress: true
+#        ifempty: false
+#        create: false
+#        dateext: true
+#        dateformat:  '-%Y%m%d'
+#        size: 20M
+#        missingok: true
+#        copytruncate: true

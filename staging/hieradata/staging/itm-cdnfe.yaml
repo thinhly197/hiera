@@ -1,0 +1,58 @@
+classes:
+  - nginx
+  - nfsclient
+  - ssh-key
+  - loggly::rsyslog
+
+#########################
+## Config Nginx version 
+#########################
+nginx::package_name: 'nginx-1.6.2-1.el6.ngx'
+
+#################
+## Config VHost
+#################
+nginx::nginx_vhosts:
+  'cdn.itruemart-dev.com':
+    www_root: '/data/storage/'
+    use_default_location: false
+    vhost_cfg_append:
+      'gzip': 'on'
+      'gzip_static': 'on'
+      'gzip_http_version': '1.1'
+      'gzip_vary': 'on'
+      'gzip_comp_level': '6'
+      'gzip_proxied': 'any'
+      'gzip_types': 'text/plain text/css image/png image/gif image/jpeg application/x-javascript text/xml application/xml application/xml+rss text/javascript'
+      'gzip_buffers': '16 8k'
+      'gzip_disable': 'MSIE [1-6]\.(?!.*SV1)'
+
+nginx::nginx_locations:
+  '~ ^/(.*)\.(gif|jpg|png)$':
+    vhost: 'cdn.itruemart-dev.com'
+    location_custom_cfg:
+      'expires': '1M'
+
+
+nginx::http_cfg_append:
+  'open_file_cache': 'max=1000 inactive=20s'
+  'open_file_cache_valid': '60s'
+#  'open_file_cache_min_uses':'5'
+#  'open_file_cache_errors':'off'
+
+#################
+## NFS Client
+#################
+nfsclient::device: 'nfs-server:/data/product/itruemart'
+nfsclient::directory: '/data/storage/'
+nfsclient::domain: 'itruemart-dev.com'
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'staging'
+loggly::rsyslog::logfiles:
+    'itm-cdnfe_access.log':
+        logname:  'itm-cdnfe_access.log'
+        filepath: '/var/log/nginx/cdn.itruemart-dev.com.access.log'

@@ -1,0 +1,10 @@
+classes:
+  - tyk_dashboard_rpm
+######################################
+#Config parameters for tyk-dashboard #
+######################################
+
+tyk_dashboard_rpm::host: 'http://alpha-apis-tyk.wemall-dev.com'
+tyk_dashboard_rpm::mongo_url: 'mongodb://tyk_user:tyk1688@ds057594-a0.mongolab.com:57594,ds057594-a1.mongolab.com:57594/tyk_analytics'
+tyk_dashboard_rpm::page_size: '100'
+tyk_dashboard_rpm::redis_host: 'wma-a-tyk-cluster.pflz44.0001.apse1.cache.amazonaws.com'

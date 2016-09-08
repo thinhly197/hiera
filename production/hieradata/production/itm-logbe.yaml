@@ -1,0 +1,8 @@
+classes:
+  - mongodb
+
+########################
+## Mongo Configuration
+########################
+#redis::package_name: 'redis-2.6.4-0.el6'
+#redis::redis_port: '6381'

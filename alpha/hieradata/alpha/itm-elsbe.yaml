@@ -1,0 +1,13 @@
+classes:
+  - elasticsearch
+
+################################
+## Elasticsearch Configuration
+################################
+elasticsearch::package_name: 'elasticsearch-1.4.0-1'
+elasticsearch::java_install: true
+elasticsearch::java_package: 'jre1.8.0_25-1.8.0_25-fcs'
+elasticsearch::instance:
+  'es01':
+    config:
+      'discovery.zen.ping.multicast.enabled': 'false'

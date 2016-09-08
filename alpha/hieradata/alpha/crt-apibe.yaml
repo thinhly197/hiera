@@ -1,0 +1,32 @@
+classes:
+  - nginx_wemall_cart_api
+  - php_phalcon_nginx_wemall
+  - cart-api_rpm
+  - logrotate
+#########################
+## Config Nginx version 
+#########################
+nginx_wemall_cart_api::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+##########################
+##      real ip         ##
+########################## 
+nginx_wemall_cart_api::config::set_real_ip_from: '10.229.12.0/22'
+nginx_wemall_cart_api::config::real_ip_header: 'X-Forwarded-For'
+nginx_wemall_cart_api::config::real_ip_recursive: 'on'
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/cart-api/application.log'
+        rotate: 15
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        missingok: true
+        copytruncate: true

@@ -1,0 +1,51 @@
+classes:
+#  - wemallyumrepo
+  - php_wemall
+
+wemallyumrepo::repo_env: 'alpha'
+wemallyumrepo::repo_name:
+  - 'base'
+  - 'php56'
+  - 'share'
+
+########################
+## PHP
+########################
+php_wemall::ensure: 5.6.11-1.el6.remi
+php_wemall::manage_repos: false
+php_wemall::fpm: true
+php_wemall::dev: true
+php_wemall::composer: false
+php_wemall::pear: false
+php_wemall::phpunit: false
+php_wemall::composer::auto_update: false
+php_wemall::config::settings:
+  PHP/memory_limit: 2048M
+  PHP/max_input_time: 10
+  PHP/max_input_vars: 1000
+  PHP/max_execution_time: 30
+  PHP/file_uploads: On
+  PHP/expose_php: Off
+  PHP/short_open_tag: Off
+  PHP/display_startup_errors: Off
+  PHP/display_errors: Off
+  PHP/html_errors: Off
+  PHP/allow_url_fopen: On
+  PHP/allow_url_include: Off
+  PHP/register_globals: Off
+  Date/date.timezone: UTC
+  Mysql/allow_persistent: Off
+
+php_wemall::extensions:
+  mbstring: {}
+  mcrypt: {}
+#  curl: {}
+#  pdo: {}
+#  phpunit-PHPUnit: {}
+  phalcon2-2.0.6-1.el6.remi.5.6: {}
+  pecl-xdebug-2.3.3-1.el6.remi.5.6: {}
+#  pecl-mongodb-0.6.3-1.el6.remi.5.6: {}
+#  pecl-mongo-1.6.10-1.el6.remi.5.6: {}
+  pecl-redis-2.2.7-1.el6.remi.5.6: {}
+  pecl-igbinary-1.2.1-1.el6.remi.5.6: {}
+#  pecl-imagick-3.2.0-0.9.RC1.el6.remi.5.6: {}

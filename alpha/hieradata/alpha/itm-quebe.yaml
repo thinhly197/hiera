@@ -1,0 +1,8 @@
+classes:
+  - gearman
+
+#################################
+## Gearman Daemon Configuration
+#################################
+gearman::package_name: 'gearmand-1.1.8'
+#gearman::custom_options: '--keepalive --keepalive-idle=-1'

@@ -1,0 +1,3 @@
+classes:
+  - nginx_wemall_payment_cms
+  - payment-cms_rpm

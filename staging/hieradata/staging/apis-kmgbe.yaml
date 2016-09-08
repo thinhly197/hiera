@@ -1,0 +1,81 @@
+classes :
+  - apimanager
+
+apimanager::software_name: "wso2am-1.9.1"
+apimanager::username: "apiadmin"
+apimanager::group: "apiadm"
+apimanager::component_name: "publisher-store"
+apimanager::package_java: "jdk"
+apimanager::package_java_version: "1.7.0_75-fcs"
+
+################################
+## Config publisher/Store
+################################
+apimanager::wso2_username: "admin"
+apimanager::wso2_password: "admin"
+
+################################
+## api-manager.xml
+################################
+## AuthManager
+apimanager::authmanager_serverurl: "https://internal-apis-keymanager.wemall-dev.com:9443/services/"
+apimanager::removeoauthheadersfromoutmessage: "false"
+## APIGateway
+apimanager::apigateway_serverurl: "https://internal-apis-gatewaymanager.wemall-dev.com:9443/services/"
+apimanager::apigateway_gatewayendpoint: "http://apis-gateway.wemall-dev.com:8280,https://apis-gateway.wemall-dev.com:8243"
+apimanager::apigateway_enablegatewaykeycache: "true"
+## APIKeyValidator
+apimanager::apikeyvalidator_serverurl: "https://internal-apis-keymanager.wemall-dev.com:9443/services/"
+apimanager::apikeyvalidator_enablejwtcache: "true"
+apimanager::apikeyvalidator_enablekeymgtvalidationinfocache: "true"
+apimanager::apikeyvalidator_keyvalidatorclienttype: "WSClient"
+apimanager::apikeyvalidator_revokeapiurl: "https://internal-apis-gatewaymanager.wemall-dev.com:9443/revoke"
+
+################################
+## axis2.xml
+################################
+## messageFormatter
+apimanager::messageformatter_class: "JsonFormatter"
+## messageBuilder
+apimanager::messagebuilder_class: "JsonBuilder"
+## transportSender
+apimanager::transportsender_hostnameverifier: "AllowAll"
+
+################################
+## master-datasources.xml
+################################
+## WSO2AM_DB
+apimanager::wso2am_db_username: "apimgt_rw"
+apimanager::wso2am_db_password: "MjutgAp89"
+apimanager::wso2am_db_url: "jdbc:mysql://apis-rds.wemall-dev.com:3306/apimgt_db?autoReconnect=true"
+apimanager::wso2am_db_driverclassname: "com.mysql.jdbc.Driver"
+## WSO2UM_DB
+apimanager::wso2um_db_username: "user_rw"
+apimanager::wso2um_db_password: "ujmnhytgb"
+apimanager::wso2um_db_url: "jdbc:mysql://apis-rds.wemall-dev.com:3306/user_db?autoReconnect=true"
+apimanager::wso2um_db_driverclassname: "com.mysql.jdbc.Driver"
+## WSO2REG_DB
+apimanager::wso2reg_db_username: "reg_rw"
+apimanager::wso2reg_db_password: "Edcvfrtgb"
+apimanager::wso2reg_db_url: "jdbc:mysql://apis-rds.wemall-dev.com:3306/reg_db?autoReconnect=true"
+apimanager::wso2reg_db_driverclassname: "com.mysql.jdbc.Driver"
+
+################################
+## registry.xml
+################################
+## remoteInstance
+apimanager::remoteinstance_url: "https://govregistry.apim-wso2.com"
+apimanager::remoteinstance_id: "gov"
+apimanager::remoteinstance_dbconfig: "govregistry"
+## mount
+apimanager::mount_path: "/_system/governance"
+apimanager::mount_overwrite: "true"
+apimanager::mount_instanceid: "gov"
+apimanager::mount_targetpath: "/_system/governance"
+
+################################
+## user-mgt.xml
+################################
+apimanager::usermanager_adminrole: "admin"
+apimanager::usermanager_everyonerolename: "everyone"
+apimanager::usermanager_datasource: "jdbc/WSO2UM_DB"

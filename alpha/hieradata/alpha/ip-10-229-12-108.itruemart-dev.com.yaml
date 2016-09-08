@@ -1,0 +1,37 @@
+classes:
+  - nginx
+
+#########################
+## Config Nginx version
+#########################
+nginx::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+#################
+## Config VHost
+#################
+nginx::nginx_vhosts:
+  'alpha-apis-proxy.wemall-dev.com':
+    listen_port: 80
+    www_root: '/var/'
+    use_default_location: false
+    #vhost_cfg_append:
+    #  'gzip': 'on'
+    #  'gzip_static': 'on'
+    #  'gzip_http_version': '1.1'
+    #  'gzip_vary': 'on'
+    #  'gzip_comp_level': '6'
+    #  'gzip_proxied': 'any'
+    #  'gzip_types': 'text/plain text/css image/png image/gif image/jpeg application/x-javascript text/xml application/xml application/xml+rss text/javascript'
+    #  'gzip_buffers': '16 8k'
+    #  'gzip_disable': 'MSIE [1-6]\.(?!.*SV1)'
+
+nginx::nginx_locations:
+  '~ /public/':
+    vhost: 'alpha-apis-proxy.wemall-dev.com'
+    location_custom_cfg:
+      'proxy_pass': 'http://alpha-apis-gateway.wemall-dev.com'
+
+  '/':
+    vhost: 'alpha-apis-proxy.wemall-dev.com'
+    location_custom_cfg:
+      'return': '405'

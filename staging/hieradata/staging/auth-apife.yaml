@@ -1,0 +1,3 @@
+classes:
+  - authentication-api_rpm
+authentication-api_rpm::app_env: 'PROD'

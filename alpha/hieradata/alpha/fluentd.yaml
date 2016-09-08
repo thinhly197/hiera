@@ -1,0 +1,44 @@
+classes:
+  - fluentd
+#  - fluentd::s3
+#  - fluentd::elasticsearch
+
+#############################################
+## Config Fluentd
+#############################################
+fluentd::enable: 'true'
+fluentd::s3::enable: 'true'
+#fluentd::s3::aws_key_id: 'AKIAI67SEOOADK2GFHPA'  
+#fluentd::s3::aws_sec_key: 'uWTcDM+vWdPhuq1tlm63kauUbeeqf2fnJvH+Ek2H'
+fluentd::s3::s3_region: 'ap-southeast-1'
+fluentd::s3::s3_bucket: 'test-wms-log01'
+fluentd::s3::working_dir: '/var/log/td-agent'
+fluentd::s3::service_group: 'wms-itmwebfe/audit'
+fluentd::s3::s3_config:
+    's3.itm.wefe.access.log':
+        tag: 's3.itm.wefe.access.log'
+        service_group: 'wms-itmweb/log'
+        filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+        ensure: 'file'
+    's3.itm.wefe.application.log':
+        tag: 's3.itm.wefe.application.log'
+        service_group: 'wms-itmweb/applog'
+        filepath: '/data/log/itruemart/application.log'
+        ensure: 'file'
+fluentd::elasticsearch::enable: 'true'
+fluentd::elasticsearch::working_dir: '/var/log/td-agent'
+fluentd::elasticsearch::es_host: 'search-itm-alpha-search-yms66r47nxiztv6pueomztr564.ap-southeast-1.es.amazonaws.com'  
+fluentd::elasticsearch::es_port: '443'  
+fluentd::elasticsearch::es_scheme: 'https'  
+fluentd::elasticsearch::index_prefix: 'itruemart'  
+fluentd::elasticsearch::es_config:
+    'es.itm.wefe.access.log':
+        tag: 'es.itm.wefe.access.log'
+        filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+        grok_pattern: 'EXTRACOMBINEDAPACHELOG'
+        ensure: 'file'
+    'es.itm.wefe.application.log':
+        tag: 'es.itm.wefe.application.log'
+        filepath: '/data/log/itruemart/application.log'
+        grok_pattern: 'ITMLOG'
+        ensure: 'file'

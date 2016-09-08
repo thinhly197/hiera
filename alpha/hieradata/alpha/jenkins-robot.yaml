@@ -1,0 +1,7 @@
+classes:
+  - jre-debian
+  - jenkins-robot
+  - google-chrome-debian
+  - mozilla-firefox-debian
+  - phantomjs-debian
+  - jenkins-debian

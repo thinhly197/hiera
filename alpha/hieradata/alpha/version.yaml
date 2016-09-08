@@ -1,0 +1,321 @@
+itruemart:
+    git: 'git@git.itruemart-dev.com:itm/itruemart.git'
+    project:
+        name: itruemart
+        version: 1.0.0-972
+        hash: fe4b3fc70e04cf94f67f6454a6886dd1378a0d3d
+        domain: alpha-www.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+pcms:
+    git: 'git@git.itruemart-dev.com:itm/pcms.git'
+    project:
+        name: pcms
+        version: 1.0.0-1102
+        hash: 1fa133d4c4db53fbe64bf1ed8c0107efddfba0ff
+        domain: alpha-pcms.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+        sc_stamp: /data/storage/pcms/storage/nfs/sc-stamp
+        salefile: /data/storage/pcms/storage/nfs/salefile
+api:
+    git: 'git@git.itruemart-dev.com:itm/api.git'
+    project:
+        name: api
+        version: 1.0.0-6
+        hash: 9696e1400833d5c7743ee262cbc0ec275649fafb
+        domain: alpha-api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+supplychain:
+    git: 'git@git.itruemart-dev.com:itm/supplychain.git'
+    project:
+        name: supplychain
+        version: 1.0.0-20
+        hash: 10e200403325e7e1d399818e4b3b8bdadbc5a897
+        domain: alpha-supplychain.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+campusstore:
+    git: 'git@git.itruemart-dev.com:itm/campusstore.git'
+    project:
+        name: campusstore
+        version: 1.0.0-1
+        hash: 8a823ad5481b35ad616fc3faadb521f6e9c2811d
+        domain: alpha-campusstore.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+search-api:
+    git: 'git@git.itruemart-dev.com:itm/search-api.git'
+    project:
+        name: search-api
+        version: 1.0.0-174
+        hash: 24f74c75eb8fa60fe25186d7944a886bbd03bb98
+        domain: alpha-search-api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+web-api:
+    git: 'git@git.itruemart-dev.com:itm/web-api.git'
+    project:
+        name: web-api
+        version: 1.0.0-49
+        hash: 6a8153e40a92ec8f4e21490e97e5c2680bd2d562
+        domain: alpha-web-api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+pre-register:
+    git: 'git@git.itruemart-dev.com:itm/pre-register.git'
+    project:
+        name: pre-register
+        version: 1.0.0-1
+        hash: 4530b0d319b0314fef5b8098653480ac6d3509ff
+        domain: alpha-pre-register.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+mobile-api:
+    git: 'git@git.itruemart-dev.com:itm/mobile-app-api.git'
+    project:
+        name: mobile-api
+        version: 1.0.0-367
+        hash: db84ac1f9312ed4f497dcc5d968987f220d1841b
+        domain: alpha-mobile-api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+mobile-backoffice:
+    git: 'git@git.itruemart-dev.com:itm/mobile-app-backoffice.git'
+    project:
+        name: mobile-backoffice
+        version: 1.0.0-235
+        hash: 0a659de3cc0198bfa5e84ea3adc0482ff9c652c6
+        domain: alpha-mobile-backoffice.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+itruemart-service:
+    project:
+        name: service-itruemart
+        version: 1.0.0-232
+        domain: alpha-service.itruemart-dev.com
+campaign-api:
+    project:
+        version: 1.0.1-424
+recommend:
+    project:
+        version: 1.0.0-263
+solr-server:
+    project:
+        version: 1.0.0-50
+campaign-backoffice:
+    project:
+        version: 1.0.1-239
+YOUR_PROJECT:
+    project:
+        version: 1.0.0-16
+wemall-web:
+    project:
+        version: 1.0.0-699
+        domain: wemall
+cms-storefront:
+    project:
+        version: 1.0.0-13
+storefront-cms:
+    project:
+        version: 1.0.0-361
+portal-cms:
+    project:
+        version: 1.0.0-373
+storefront-api:
+    project:
+        version: 1.0.0-325
+portal-api:
+    project:
+        version: 1.0.0-329
+pds-backoffice:
+    project:
+        version: 1.0.0-532
+fms-api:
+    project:
+        version: 1.0.0-187
+fms-frontend:
+    project:
+        version: 1.0.0-131
+pds-products:
+    project:
+        version: 1.0.0-520
+inventory-api:
+    project:
+        version: 1.0.0-267
+cart-api:
+    project:
+        version: 1.0.0-388
+cart-cms:
+    project:
+        version: 1.0.0-226
+order-api:
+    project:
+        version: 1.0.0-286
+order-cms:
+    project:
+        version: 1.0.0-206
+general-cms:
+    project:
+        version: 1.0.0-223
+general-api:
+    project:
+        version: 1.0.0-304
+payment-cms:
+    project:
+        version: 1.0.0-207
+payment-api:
+    project:
+        version: 1.0.0-204
+notification-cms:
+    project:
+        version: 1.0.0-205
+notification-api:
+    project:
+        version: 1.0.0-203
+fms-scripts:
+    project:
+        version: 1.0.0-36
+fms-services:
+    project:
+        version: 1.0.0-73
+fms-printservice:
+    project:
+        version: 1.0.0-15
+search-api-wemall:
+    project:
+        version: 1.0.0-226
+pricing-api:
+    project:
+        version: 1.0.0-297
+authentication-api:
+    project:
+        version: 1.0.0-31
+cache-service:
+    project:
+        version: 1.0.0-291
+search-sync-api:
+    project:
+        version: 1.0.0-189
+authorization-api:
+    project:
+        version: 1.0.0-19
+pricing-backoffice:
+    project:
+        version: 1.0.0-83
+directory-api:
+    project:
+        version: 1.0.0-21
+park-test:
+    project:
+        version: 1.0.0-35
+financial-api:
+    project:
+        version: 2.0.0-46
+merchant-api:
+    project:
+        version: 1.0.0-71
+wemall-financial-fe:
+    project:
+        version: 1.0.0-4
+financial-web:
+    project:
+        version: 1.0.0-11
+bis-backoffice:
+    project:
+        version: 1.0.0-27
+bis-processor:
+    project:
+        version: 1.0.0-59
+pds-sync:
+    project:
+        version: 1.0.0-24
+pds-sync-brand:
+    project:
+        version: 1.0.0-39
+pds-sync-collection:
+    project:
+        version: 1.0.0-15
+general-adaptor-api:
+    project:
+        version: 1.0.1-44
+park-poc:
+    project:
+        version: 1.0.0-55
+healthcheck-service:
+    project:
+        version: 1.0.0-16
+bis-api:
+    project:
+        version: 1.0.0-62
+ads-switcher:
+    project:
+        version: 1.0.0-69
+facebook-simu-api:
+    project:
+        version: 1.0.0-3
+booking:
+    project:
+        version: 1.0.0-90
+        hash: 13f22f00cc8e21691afd30c979ddc7267568e68d
+point-api:
+    project:
+        version: 1.0.0-22
+point-cms:
+    project:
+        version: 1.0.0-xx
+employee:
+    project:
+        version: 1.0.0-325
+pocweb:
+    project:
+        version: 1.0.0-45
+javis-stark:
+    project:
+        version: 1.0.0-6
+rec-api:
+    project:
+        version: 1.0.0-105
+pri-api:
+    project:
+        version: 1.0.0-56
+pds-api:
+    project:
+        version: 1.0.0-66
+selfservice:
+    project:
+        version: 1.0.0-156
+supplychain-api:
+    project:
+        version: 1.0.0-172

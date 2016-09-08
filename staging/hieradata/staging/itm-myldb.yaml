@@ -1,0 +1,53 @@
+classes:
+  - mysql::server
+  - mysql::client
+
+#######################
+## Repo Configuration
+#######################
+mysql::params::internal_repo: 'iTrueMart'
+
+########################
+## MySQL Configuration
+########################
+mysql::server::package_name: 'mysql-community-server-5.6.20-4.el6'
+mysql::server::libcompat_package_name: 'mysql-community-libs-compat-5.6.20-4.el6'
+mysql::server::backuptool_package_name: 'percona-xtrabackup-2.2.3-4982.el6'
+mysql::server::override_options:
+  'mysqld':
+    'datadir': '/var/lib/mysql'
+    'join_buffer_size': '128M'
+    'sort_buffer_size': '2M'
+    'read_rnd_buffer_size': '2M'
+    'key_buffer_size': '128M'
+    'gtid-mode': 'ON'
+    'binlog_format': 'mixed'
+    'log_bin': '/data/bin/bin_log/mysql-bin'
+    'slow_query_log': '1'
+    'slow-query-log-file': '/data/log/slow_log/mysql-slow.log'
+    'relay_log': ''
+    'relay_log_index': ''
+    'server_id': '21'
+    'symbolic-links': '0'
+    'init-connect': "'SET NAMES utf8'"
+    'character-set-server': 'utf8'
+    'collation-server': 'utf8_unicode_ci'
+    'innodb_buffer_pool_size': '256M'
+    'innodb_flush_method': 'O_DIRECT'
+    'innodb_data_file_path': 'ibdata1:10M:autoextend'
+    'innodb_log_buffer_size': '8M'
+    'innodb_additional_mem_pool_size': '8M'   
+    'innodb_file_per_table': true
+    'log-slave-updates': '1'
+    'sync_binlog': '1'
+    'expire_logs_days': '7'
+    'max_binlog_size': '256M'
+    'enforce-gtid-consistency': true
+    'skip_name_resolve': true
+    'bind-address': ''
+  'mysqld_safe':
+    'log-error': '/data/log/error_log/mysqld.log'  
+    'default-character-set': 'utf8'
+
+mysql::client::package_name: 'mysql-community-client-5.6.20-4.el6'
+

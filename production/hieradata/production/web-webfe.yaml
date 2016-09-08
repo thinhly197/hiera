@@ -1,0 +1,57 @@
+classes:
+  - php_phalcon_nginx_wemall
+  - nginx_wemall_web
+  - wemall-web_rpm
+  - loggly::rsyslog
+  - logrotate
+
+#########################
+#     Config php.ini    #
+#########################
+php_phalcon_nginx_wemall::pm: 'ondemand'
+php_phalcon_nginx_wemall::max_children: '100'
+php_phalcon_nginx_wemall::max_requests: '150'
+php_phalcon_nginx_wemall::listen: '/var/run/php-fpm/php5-fpm.sock'
+php_phalcon_nginx_wemall::listen_owner: 'nginx'
+php_phalcon_nginx_wemall::listen_group: 'nginx'
+php_phalcon_nginx_wemall::listen_mode: '0660'
+
+#########################
+## Config Nginx version 
+#########################
+nginx_wemall_web::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+##########################
+##      real ip         ##
+##########################
+nginx_wemall_web::config::set_real_ip_from: '10.229.8.0/22'
+nginx_wemall_web::config::real_ip_header: 'X-Forwarded-For'
+nginx_wemall_web::config::real_ip_recursive: 'on'
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'production'
+loggly::rsyslog::logfiles:
+    'web-webfe_application.log':
+        logname:  'web-webfe_application.log'
+        filepath: '/data/log/wemall/application.log'
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/wemall/application.log'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+        postrotate: '/etc/init.d/rsyslog stop && rm -rf /var/spool/rsyslog/stat-* && /etc/init.d/rsyslog start'

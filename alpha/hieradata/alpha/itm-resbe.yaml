@@ -1,0 +1,12 @@
+classes:
+  - redis
+
+########################
+## Redis Configuration
+########################
+redis::package_name: 'redis-2.6.4-0.el6'
+redis::redis_port: '6381'
+#redis::package_name: 'redis-2.8.17-2.el6.remi'
+#redis::instance:
+#   'redis-6381':
+#      redis_port: '6381'

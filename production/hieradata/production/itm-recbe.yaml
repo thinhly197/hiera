@@ -1,0 +1,34 @@
+classes:
+  - java
+  - tomcat8
+  - recommendation_rpm
+  - logrotate
+  - loggly::rsyslog
+
+######################
+## Config Loggly    ##
+######################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'production'
+loggly::rsyslog::logfiles:
+    'itm-recbe_application.log':
+        logname: 'itm-recbe_application.log'
+        filepath: '/data/log/rec-api/application.log'
+
+######################
+## Config Logrotate ##
+######################
+logrotate::rule:
+    'catalina_log':
+        path: '/opt/apache-tomcat/apache-tomcat-8.0.23/logs/catalina.out'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true

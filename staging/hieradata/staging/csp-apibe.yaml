@@ -1,0 +1,56 @@
+classes:
+  - nginx_wemall_api_portal
+  - php_phalcon_nginx_wemall
+  - portal-api_rpm
+  - loggly::rsyslog
+  - logrotate
+
+#########################
+#     Config php.ini    #
+#########################
+php_phalcon_nginx_wemall::pm: 'ondemand'
+php_phalcon_nginx_wemall::max_children: '15'
+php_phalcon_nginx_wemall::max_requests: '110'
+php_phalcon_nginx_wemall::listen: '/var/run/php-fpm/php5-fpm.sock'
+php_phalcon_nginx_wemall::listen_owner: 'nginx'
+php_phalcon_nginx_wemall::listen_group: 'nginx'
+php_phalcon_nginx_wemall::listen_mode: '0660'
+
+#########################
+## Config Nginx version 
+#########################
+nginx_wemall_api_portal::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+##########################
+##      real ip         ##
+##########################
+nginx_wemall_api_portal::config::set_real_ip_from: '10.229.0.0/21'
+nginx_wemall_api_portal::config::real_ip_header: 'X-Forwarded-For'
+nginx_wemall_api_portal::config::real_ip_recursive: 'on'
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'staging'
+loggly::rsyslog::logfiles:
+    'cps-apibe_application.log':
+        logname:  'cps-apibe_application.log'
+        filepath: '/data/log/portal-api/application.log'
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/portal-api/application.log'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true

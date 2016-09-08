@@ -1,0 +1,11 @@
+classes:
+  - nginx_wemall_notification_api
+  - php_phalcon_nginx_wemall
+  - notification-api_rpm
+
+##########################
+##      real ip         ##
+##########################
+nginx_wemall_notification_api::config::set_real_ip_from: '10.229.8.0/22'
+nginx_wemall_notification_api::config::real_ip_header: 'X-Forwarded-For'
+nginx_wemall_notification_api::config::real_ip_recursive: 'on'

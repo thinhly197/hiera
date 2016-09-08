@@ -1,0 +1,4 @@
+classes:
+  - java
+  - tomcat8
+  - pricing-api_rpm

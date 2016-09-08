@@ -1,0 +1,19 @@
+classes:
+  - php
+  - phpmyadmin
+
+#############################################
+## Config PHP version and extensions
+#############################################
+apache::mod::php::package_name: 'php-5.4.34-1.el6.remi'
+php::extensions:
+- php-mcrypt-5.4.34-1.el6.remi
+- php-mysqlnd-5.4.34-1.el6.remi
+- php-mbstring-5.4.34-1.el6.remi
+
+##############################
+## phpMyAdmin configuration
+##############################
+phpmyadmin::server_list: 
+  - 'alpha-pcmsdb-ro.itruemart-dev.com'
+  - 'alpha-scmdb-rw.wemall-dev.com'

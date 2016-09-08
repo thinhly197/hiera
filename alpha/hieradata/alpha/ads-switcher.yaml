@@ -1,0 +1,5 @@
+classes:
+  - java
+  - tomcat8
+  - ads-switcher_rpm
+  - facebook-simu-api_rpm

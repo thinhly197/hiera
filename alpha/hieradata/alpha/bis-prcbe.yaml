@@ -1,0 +1,16 @@
+classes:
+  - java
+  - bis-processor_rpm
+  - cron
+################
+## Config cron #
+################
+cron::crontabs:
+  'crontab 1':
+    command: '/data/projects/bis-processor/get_customer_segmentation.sh && /data/projects/bis-processor/copy_customer_segmentation_to_s3.sh && /data/projects/bis-processor/update_mailing_list.sh'
+    user:    'root'
+    minute:  '0'
+    hour:    '15'
+    monthday: '*'
+    month:   '*'
+    weekday: [3]

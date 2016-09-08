@@ -1,0 +1,51 @@
+classes:
+  - tykgw_rpm
+  - logrotate
+
+##################################
+## Config TYK API GW Parameters ##
+##################################
+tykgw_rpm::storage_host: 'wma-a-tyk-cluster.pflz44.0001.apse1.cache.amazonaws.com'
+tykgw_rpm::analytics_config_mongo_url: 'mongodb://tyk_user:tyk1688@ds057594-a0.mongolab.com:57594,ds057594-a1.mongolab.com:57594/tyk_analytics'
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'tyk_log':
+        path: '/var/log/tyk.log'
+        rotate: 15
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        missingok: true
+        copytruncate: true
+        postrotate: 'logrotate -f /etc/logrotate.d/tyk_log'
+    'tyk_err':
+        path: '/var/log/tyk.err'
+        rotate: 15
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        missingok: true
+        copytruncate: true
+        postrotate: 'logrotate -f /etc/logrotate.d/tyk_err && /etc/init.d/tyk restart'
+
+#############################################
+## Config limits
+#############################################
+limits::config:
+  '*':
+    nofile:
+      soft: '80000'
+      hard: '80000'
+    nproc:
+      soft: '80000'
+      hard: '80000'
+

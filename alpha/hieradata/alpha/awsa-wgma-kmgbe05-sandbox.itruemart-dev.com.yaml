@@ -1,0 +1,82 @@
+classes :
+  - apimanager
+
+apimanager::software_name: "wso2am-1.9.1"
+apimanager::username: "apiadmin"
+apimanager::group: "apiadm"
+apimanager::component_name: "publisher-store"
+apimanager::package_java: "jdk"
+apimanager::package_java_version: "1.7.0_75-fcs"
+
+################################
+## Config publisher/Store
+################################
+apimanager::wso2_username: "admin"
+apimanager::wso2_password: "admin"
+apimanager::wso2am_db_username: "wso2"
+#"apigateway"
+apimanager::wso2am_db_password: "wso2puppet"
+#"gate99way"
+
+################################
+## api-manager.xml
+################################
+## AuthManager
+apimanager::authmanager_serverurl: "https://alpha-internal-keymanager.wemall-dev.com:9443/services/"
+## APIGateway
+apimanager::apigateway_serverurl: "https://alpha-internal-gatewaymanager.wemall-dev.com:9443/services/"
+apimanager::apigateway_gatewayendpoint: "http://alpha-api-gateway.wemall-dev.com:8280,https://alpha-api-gateway.wemall-dev.com:8243"
+#"http://alpha-api-gateway.wemall-dev.com,https://alpha-api-gateway.wemall-dev.com"
+apimanager::apigateway_enablegatewaykeycache: "true"
+## APIKeyValidator
+apimanager::apikeyvalidator_serverurl: "https://alpha-internal-keymanager.wemall-dev.com:9443/services/"
+apimanager::apikeyvalidator_enablejwtcache: "true"
+apimanager::apikeyvalidator_enablekeymgtvalidationinfocache: "true"
+apimanager::apikeyvalidator_keyvalidatorclienttype: "WSClient"
+apimanager::apikeyvalidator_revokeapiurl: "https://alpha-internal-gatewaymanager.wemall-dev.com:9443/revoke"
+
+################################
+## axis2.xml
+################################
+## messageFormatter
+apimanager::messageformatter_class: "JsonFormatter"
+## messageBuilder
+apimanager::messagebuilder_class: "JsonBuilder"
+## transportSender
+apimanager::transportsender_hostnameverifier: "AllowAll"
+
+################################
+## master-datasources.xml
+################################
+## WSO2AM_DB
+apimanager::wso2am_db_url: "jdbc:mysql://wso2-test-puppet.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/apimgtdb?autoReconnect=true"
+#"jdbc:mysql://awsa-wgma-rdsdb01.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/apimgtdb?autoReconnect=true"
+apimanager::wso2am_db_driverclassname: "com.mysql.jdbc.Driver"
+## WSO2UM_DB
+apimanager::wso2um_db_url: "jdbc:mysql://wso2-test-puppet.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/userdb?autoReconnect=true"
+#"jdbc:mysql://awsa-wgma-rdsdb01.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/userdb?autoReconnect=true"
+apimanager::wso2um_db_driverclassname: "com.mysql.jdbc.Driver"
+## WSO2REG_DB
+apimanager::wso2reg_db_url: "jdbc:mysql://wso2-test-puppet.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/regdb?autoReconnect=true"
+#"jdbc:mysql://awsa-wgma-rdsdb01.cifdvva6phlr.ap-southeast-1.rds.amazonaws.com:3306/regdb?autoReconnect=true"
+apimanager::wso2reg_db_driverclassname: "com.mysql.jdbc.Driver"
+
+################################
+## registry.xml
+################################
+## remoteInstance
+apimanager::remoteinstance_url: "https://govregistry.apim-wso2.com"
+apimanager::remoteinstance_id: "gov"
+apimanager::remoteinstance_dbconfig: "govregistry"
+## mount
+apimanager::mount_path: "/_system/governance"
+apimanager::mount_overwrite: "true"
+apimanager::mount_instanceid: "gov"
+apimanager::mount_targetpath: "/_system/governance"
+
+################################
+## user-mgt.xml
+################################
+apimanager::usermanager_adminrole: "admin"
+apimanager::usermanager_everyonerolename: "everyone"
+apimanager::usermanager_datasource: "jdbc/WSO2UM_DB"

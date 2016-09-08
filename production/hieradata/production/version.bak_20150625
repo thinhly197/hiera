@@ -1,0 +1,122 @@
+itruemart:
+    git: 'git@git.itruemart-dev.com:itm/itruemart.git'
+    project:
+        name: itruemart
+        version: 1.0.0-351
+        hash: 48f8b3889e00ee375c0ca144d4750c6b8913a79d
+        domain: www.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+pcms:
+    git: 'git@git.itruemart-dev.com:itm/pcms.git'
+    project:
+        name: pcms
+        version: 1.0.0-380
+        hash: db565e50d94370bd863ee5254eb794ecb10fd989
+        domain: pcms.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+        sc_stamp: /data/storage/pcms/storage/nfs/sc-stamp
+        salefile: /data/storage/pcms/storage/nfs/salefile
+api:
+    git: 'git@git.itruemart-dev.com:itm/api.git'
+    project:
+        name: api
+        version: 1.0.0-10
+        hash: a40a4bf5a15890b774f72ff44bd00a835f951724
+        domain: api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+supplychain:
+    git: 'git@git.itruemart-dev.com:itm/supplychain.git'
+    project:
+        name: supplychain
+        version: 1.0.0-13
+        hash: 6849bb78a30f9164aefa87603b6bfdeadda6cd12
+        domain: supplychain.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+campusstore:
+    git: 'git@git.itruemart-dev.com:itm/campusstore.git'
+    project:
+        name: campusstore
+        version: 1.0.0-1
+        hash: 8a823ad5481b35ad616fc3faadb521f6e9c2811d
+        domain: campusstore.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+search-api:
+    git: 'git@git.itruemart-dev.com:itm/search-api.git'
+    project:
+        name: search-api
+        version: 1.0.0-28
+        hash: 0067628e86b65495014892301d7f87d314f67d5a
+        domain: search-api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+web-api:
+    git: 'git@git.itruemart-dev.com:itm/web-api.git'
+    project:
+        name: web-api
+        version: 1.0.0-1
+        hash: 6a8153e40a92ec8f4e21490e97e5c2680bd2d562
+        domain: web-api.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+pre-register:
+    git: 'git@git.itruemart-dev.com:itm/pre-register.git'
+    project:
+        name: pre-register
+        version: 1.0.0-17
+        hash: a436bbf697c777d24e764e19fe7f3b054ff55471
+        domain: pre-register.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+employee:
+    git: 'git@git.itruemart-dev.com:itm/employee.git'
+    project:
+        name: employee
+        version: 1.0.0-24
+        hash: 1123827cb7c5640bfab98569303a25506d3544c1
+        domain: ep.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www
+Service:
+git: 'git@git.itruemart-dev.com:itm/service-itruemart.git'
+    project:
+        name: Service
+        version: 1.0.0-24
+        hash: 1123827cb7c5640bfab98569303a25506d3544c1
+        domain: service.itruemart-dev.com
+        env: CI
+        project_path: /data/projects
+        storage_path: false
+        storage_link: false
+        www_path: /var/www

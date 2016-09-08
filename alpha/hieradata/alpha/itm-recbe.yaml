@@ -1,0 +1,77 @@
+classes:
+  - java
+  - tomcat8
+  - recommendation_rpm
+  - logrotate
+  - fluentd
+  - loggly::rsyslog
+#  - fluentd::s3
+#  - fluentd::elasticsearch
+
+######################
+## Config Loggly    ##
+######################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'alpha'
+loggly::rsyslog::logfiles:
+    'itm-recbe_application.log':
+        logname: 'itm-recbe_application.log'
+        filepath: '/data/log/rec-api/application.log'
+
+######################
+## Config Logrotate ##
+######################
+logrotate::rule:
+    'catalina_log':
+        path: '/opt/apache-tomcat/apache-tomcat-8.0.23/logs/catalina.out'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+
+#############################################
+## Config Fluentd
+#############################################
+fluentd::enable: 'true'
+fluentd::s3::enable: 'true'
+#fluentd::s3::aws_key_id: 'AKIAI67SEOOADK2GFHPA'  
+#fluentd::s3::aws_sec_key: 'uWTcDM+vWdPhuq1tlm63kauUbeeqf2fnJvH+Ek2H'
+fluentd::s3::s3_region: 'ap-southeast-1'
+fluentd::s3::s3_bucket: 'fluentd-wms-log' # wemall bucket for all must crate on s3
+fluentd::s3::working_dir: '/var/log/td-agent'
+fluentd::s3::service_group: 'wms-mrec/audit' # for service dir log
+fluentd::s3::s3_config:
+    # 's3.itm.wefe.access.log':
+    #     tag: 's3.itm.wefe.access.log'
+    #     service_group: 'wms-itmweb/log'
+    #     filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+    #     ensure: 'file'
+    's3.wms.mrec.application.log':
+        tag: 's3.wms.mrec.application.log'
+        service_group: 'wms-itmweb/applog'
+        filepath: '/data/log/itruemart/application.log' # log path can change
+        ensure: 'file'
+fluentd::elasticsearch::enable: 'true'
+fluentd::elasticsearch::working_dir: '/var/log/td-agent'
+fluentd::elasticsearch::es_host: 'search-itm-alpha-search-yms66r47nxiztv6pueomztr564.ap-southeast-1.es.amazonaws.com' # elasicsearch endpoint 
+fluentd::elasticsearch::es_port: '443'  # port connect with elasticsearch
+fluentd::elasticsearch::es_scheme: 'https'  
+fluentd::elasticsearch::index_prefix: 'wemall' # for brand
+fluentd::elasticsearch::es_config:
+    # 'es.itm.wefe.access.log':
+    #     tag: 'es.itm.wefe.access.log'
+    #     filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+    #     grok_pattern: 'EXTRACOMBINEDAPACHELOG'
+    #     ensure: 'file'
+    's3.wms.mrec.application.log':
+        tag: 's3.wms.mrec.application.log'
+        filepath: '/data/log/itruemart/application.log' # log path can change
+        grok_pattern: 'ITMLOG'
+        ensure: 'file'

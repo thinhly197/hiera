@@ -1,0 +1,109 @@
+classes:
+  - nginx
+  - php_phalcon_point
+  - point-cms_rpm
+  - loggly::rsyslog
+
+######################
+## Config Loggly    ##
+######################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'production'
+loggly::rsyslog::logfiles:
+    'pts-webfe_application.log':
+          logname: 'pts-webfe_application.log'
+          filepath: '/data/log/point-cms/application.log'
+
+#########################
+## Config Nginx version
+#########################
+nginx::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+#################
+## Config VHost
+#################
+nginx::nginx_vhosts:
+  'point-cms.wemall.com':
+    www_root: '/var/www/itruemart/point-cms/public'
+    use_default_location: false
+    error_log: '/var/log/nginx/point-cms.wemall.com-error.log error'
+    vhost_cfg_append:
+      'sendfile': 'on'
+      'keepalive_timeout': '65'
+      'set_real_ip_from': '10.229.8.0/22'
+      'real_ip_header': 'X-Forwarded-For'
+      'real_ip_recursive': 'on'
+      'charset': 'utf-8'
+      'autoindex': 'off'
+      
+nginx::nginx_locations:
+  # 'alpha-point-cms-02':
+  #  vhost: 'point-cms.wemall.com'
+  #  location: '/favicon.ico'
+  #  location_custom_cfg:
+  #      'access_log': 'off'
+  #      'log_not_found': 'off'
+
+  # 'alpha-point-cms-03':
+  #   vhost: 'point-cms.wemall.com'
+  #   location: '/robots.txt'
+  #   location_custom_cfg:
+  #      'access_log': 'off'
+  #      'log_not_found': 'off'
+
+  'alpha-point-cms-04':
+    vhost: 'point-cms.wemall.com'
+    location: '~ \.php$'
+    location_custom_cfg:
+       'fastcgi_split_path_info': '^(.+\.php)(/.*)$'
+       'fastcgi_pass': '127.0.0.1:9000'
+       'fastcgi_index': 'index.php'
+       'fastcgi_param ENVIRONMENT': 'production'
+       'fastcgi_param PATH_INFO': '$fastcgi_path_info'
+       'fastcgi_param PATH_TRANSLATED': '$document_root$fastcgi_path_info'
+       'fastcgi_param SCRIPT_FILENAME': '$document_root$fastcgi_script_name'
+
+       'include': '/etc/nginx/fastcgi_params'
+
+  # 'alpha-point-cms-05':
+  #  vhost: 'point-cms.wemall.com'
+  #  location: '~ /\.ht'
+  #  location_custom_cfg:
+  #      'deny': 'all'
+
+  'alpha-point-cms-06':
+   vhost: 'point-cms.wemall.com'
+   location: '/nginx_status'
+   location_custom_cfg:
+       'stub_status': 'on'
+       'access_log': 'off'
+       'allow': 'all'
+
+  'alpha-point-cms-07':
+   vhost: 'point-cms.wemall.com'
+   location: '~* ^/(css|img|js|flv|swf|download)/(.+)$'
+   location_custom_cfg:
+       'index':   'index.html index.htm index.php'
+       'autoindex': 'off'
+
+  'alpha-point-cms-08':
+   vhost: 'point-cms.wemall.com'
+   location: '/'
+   location_custom_cfg:
+       'proxy_temp_path': '/var/tmp/nginx'
+       'proxy_cache_methods': 'GET'
+       'proxy_cache_key':   '"$scheme$host$uri$is_args$args$uri$request_body"'
+       'proxy_cache_valid': 'any 30s'
+       'proxy_set_header Host':               '$host'
+       'proxy_set_header X-Real-IP':          '$remote_addr'
+       'proxy_set_header X-Forwarded-Host':   '$host'
+       'proxy_set_header X-Forwarded-Server': '$host'
+       'proxy_set_header X-Forwarded-For':    '$proxy_add_x_forwarded_for'
+       'if (-f $request_filename)': '{ break;} if (!-e $request_filename) { rewrite ^(.+)$ /index.php?_url=$1 last; break; } autoindex on'
+
+  # 'alpha-point-cms-09':
+  #  vhost: 'point-cms.wemall.com'
+  #  location: '@rewrites'
+  #  location_custom_cfg:
+  #      'rewrite': '^(.+)$ /index.php?_url=$1 last'

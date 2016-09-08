@@ -1,0 +1,201 @@
+classes:
+  - php
+  - itruemart_rpm
+  - nfsclient
+  - loggly::rsyslog
+  - logrotate
+#  - gluster::client
+  - fluentd
+  - fluentd::s3
+  - fluentd::elasticsearch
+
+#############################################
+## Config PHP version and extensions 
+#############################################
+apache::mod::php::package_name: 'php-5.3.23-1.el6.remi'
+php::extensions:
+- mod_ssl-2.2.15-39.el6.centos
+- php-pdo-5.3.23-1.el6.remi
+- php-mysqlnd-5.3.23-1.el6.remi
+- libmemcached-last-1.0.18-2.el6.remi
+- libmemcached-last-libs-1.0.18-2.el6.remi
+- php-xml-5.3.23-1.el6.remi
+- php-process-5.3.23-1.el6.remi
+- php-pear-1.9.5-3.el6.remi
+- php-pecl-igbinary-1.1.1-3.el6.remi
+- libevent-1.4.13-4.el6
+- php-pecl-memcached-2.1.0-6.el6.remi
+- php-mcrypt-5.3.23-1.el6.remi
+- libgearman-0.14-3.el6.2
+- php-pecl-gearman-0.8.3-1.el6.remi
+- php-gd-5.3.23-1.el6.remi
+- php-devel-5.3.23-1.el6.remi
+- php-ldap-5.3.23-1.el6.remi
+- php-mbstring-5.3.23-1.el6.remi
+- php-soap-5.3.23-1.el6.remi
+- php-xmlrpc-5.3.23-1.el6.remi
+- php-pear-Auth-SASL-1.0.6-1.el6.remi.noarch
+- php-pear-Net-URL-1.0.15-6.el6.remi
+- php-pear-Net-Socket-1.0.14-1.el6.remi
+- php-pear-Net-SMTP-1.6.2-1.el6.remi
+- php-pear-HTTP-Request-1.4.4-4.el6.remi
+- php-pear-Mail-1.2.0-5.el6.remi
+- php-pear-Mail-Mime-1.8.9-1.el6.remi
+- php-pear-Net-DIME-1.0.2-5.el6.remi
+- php-pear-SOAP-0.13.0-3.el6.remi
+- php-pear-XML-Parser-1.3.4-6.el6.remi
+- php-pear-XML-RPC-1.5.5-2.el6.remi.noarch
+- php-pear-XML-Serializer-0.20.2-8.el6.remi
+- php-pecl-mongo-1.3.1-1.el6.remi
+- php-pecl-oauth-1.2.3-1.el6.remi
+  
+#################
+## Config Vhost 
+#################
+apache::default_vhost: false
+apache::vhosts:
+  'alpha-www.ituremart-dev.com':  
+    port: 80
+    docroot: '/var/www/itruemart/itruemart/public' 
+    servername: 'alpha-www.itruemart-dev.com'
+    serveradmin: 'admin@itruemart-dev.com'
+    serveraliases:
+      #- 'itruemart-dev.com'
+      - 'alpha-m.itruemart-dev.com'
+    error_log_file: 'alpha-www.itruemart-dev.com-error.log'
+    error_log_extra: '|logger -t apache-error_alpha-www.itruemart-dev.com -p local5.err'
+    access_log_file: 'alpha-www.itruemart-dev.com-access.log'
+    aliases:
+      -
+        alias: '/files'
+        path: '/data/storage/itruemart/files'
+      -
+        alias: '/data'
+        path: '/data/storage/itruemart/data'  
+    directories:
+      path: '/var/www/itruemart'
+      order: 'Deny,Allow'
+      allow: 'from all'
+      options: 
+        - '-Indexes'
+        - FollowSymLinks
+      allow_override: 'All'
+  
+  'ssl-www.ituremart-dev.com':  
+    port: 443
+    ssl: true
+    ssl_cert: '/etc/httpd/ssl/itruemart-dev.com.crt'
+    ssl_key: '/etc/httpd/ssl/itruemart-dev.com_nopass.key'
+    ssl_certs_dir: ~
+    ssl_cipher: 'ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW'
+    docroot: '/var/www/itruemart/itruemart/public' 
+    servername: 'www.itruemart-dev.com'
+    serveradmin: 'admin@itruemart.com'
+    serveraliases:
+      #- 'itruemart-dev.com'
+      - 'alpha-m.itruemart-dev.com'
+    error_log_file: 'ssl-www.itruemart-dev.com-error.log'
+    error_log_extra: '|logger -t ssl-apache-error_www.itruemart-dev.com -p local5.err'
+    access_log_file: 'ssl-www.itruemart-dev.com-access.log'
+    aliases:
+      -
+        alias: '/files'
+        path: '/data/storage/itruemart/files'
+      -
+        alias: '/data'
+        path: '/data/storage/itruemart/data'
+    directories:
+      path: '/var/www/itruemart/itruemart/public'
+      order: 'Deny,Allow'
+      allow: 'from all'
+      options: 
+        - '-Indexes'
+        - FollowSymLinks
+      allow_override: 'All'
+
+
+##########################
+## Gluster configuration
+##########################
+#gluster::client::client_package: 'glusterfs-fuse-3.6.1-1.el6'
+#gluster::mount:
+#  '/gluster/data':
+#    volume: 'cmtp-istl-gfsfe01:/itruemart'
+
+#################
+## NFS Client
+#################
+#nfsclient::device: 'nfs-server:/data/product/itruemart/2014/apps/storage'
+nfsclient::device: 'alpha-nfs-server:/data/product/itruemart/itruemart'
+nfsclient::directory: '/data/storage/itruemart'
+nfsclient::domain: 'itruemart-dev.com'
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::enable_loggly: 'true'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'alpha'
+loggly::rsyslog::logfiles: 
+    'itm-webfe_access.log':
+        logname:  'itm-webfe_access.log'
+        filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+    'itm-webfe_application.log':
+        logname:  'itm-webfe_application.log'
+        filepath: '/data/log/itruemart/application.log'
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/itruemart/application.log'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+
+#############################################
+## Config Fluentd
+#############################################
+fluentd::enable: 'true'
+fluentd::s3::enable: 'true'
+fluentd::s3::aws_key_id: 'AKIAI67SEOOADK2GFHPA'  
+fluentd::s3::aws_sec_key: 'uWTcDM+vWdPhuq1tlm63kauUbeeqf2fnJvH+Ek2H'
+fluentd::s3::s3_region: 'ap-southeast-1'
+fluentd::s3::s3_bucket: 'alpha.wms.log'
+fluentd::s3::working_dir: '/var/log/td-agent'
+fluentd::s3::service_group: 'itm-webfe/audit'
+fluentd::s3::s3_config:
+    's3.itm.wefe.access.log':
+        tag: 's3.itm.wefe.access.log'
+        service_group: 'itm-webfe/log'
+        filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+        ensure: 'file'
+    's3.itm.wefe.application.log':
+        tag: 's3.itm.wefe.application.log'
+        service_group: 'itm-webfe/applog'
+        filepath: '/data/log/itruemart/application.log'
+        ensure: 'file'
+fluentd::elasticsearch::enable: 'true'
+fluentd::elasticsearch::working_dir: '/var/log/td-agent'
+fluentd::elasticsearch::es_host: 'search-itm-alpha-search-yms66r47nxiztv6pueomztr564.ap-southeast-1.es.amazonaws.com'  
+fluentd::elasticsearch::es_port: '443'  
+fluentd::elasticsearch::es_scheme: 'https'  
+fluentd::elasticsearch::index_prefix: 'itruemart'  
+fluentd::elasticsearch::es_config:
+    'es.itm.wefe.access.log':
+        tag: 'es.itm.wefe.access.log'
+        filepath: '/var/log/httpd/alpha-www.itruemart-dev.com-access.log'
+        ensure: 'file'
+        grok_pattern: 'EXTRACOMBINEDAPACHELOG'
+    'es.itm.wefe.application.log':
+        tag: 'es.itm.wefe.application.log'
+        filepath: '/data/log/itruemart/application.log'
+        ensure: 'file'
+        grok_pattern: 'ITMLOG'

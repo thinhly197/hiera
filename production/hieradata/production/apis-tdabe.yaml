@@ -1,0 +1,11 @@
+classes:
+  - tyk_dashboard_rpm
+  
+######################################
+#Config parameters for tyk-dashboard #
+######################################
+
+tyk_dashboard_rpm::host: 'http://apis-tyk.wemall.com'
+tyk_dashboard_rpm::mongo_url: 'mongodb://tyk_user:tyk1688@ds037035-a0.mongolab.com:37035,ds037035-a1.mongolab.com:37035/wms-p-tyk-analytics'
+tyk_dashboard_rpm::page_size: '100'
+tyk_dashboard_rpm::redis_host: 'apis-redis.wemall.com'

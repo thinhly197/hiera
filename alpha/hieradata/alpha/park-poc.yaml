@@ -1,0 +1,75 @@
+classes:
+  - java
+  - tomcat8
+  - park-poc
+#  - logrotate
+#  - limits
+#  - sysctl::base
+#  - cron
+#  - ulimit
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'catalina_log':
+        path: '/opt/apache-tomcat/apache-tomcat-8.0.23/logs/catalina.out'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+
+#############################################
+## Config limits
+#############################################
+limits::config:
+  '*':
+    nofile:
+      soft: '80000'
+      hard: '80000'
+    nproc:
+      soft: '80000'
+      hard: '80000'
+
+#############################################
+## Config sysctl
+#############################################
+sysctl::base::purge: true
+sysctl::base::values:
+  fs.file-max:
+    value: '80000'
+  net.ipv4.tcp_keepalive_time:
+    value: '300'
+  net.ipv4.tcp_keepalive_probes:
+    value: '5'
+  net.ipv4.tcp_keepalive_intvl:
+    value: '15'
+
+#############################################
+## Config cron
+#############################################
+cron::crontabs:
+  'crontab 1':
+    command: 'test'
+    user:    'root'
+    hour:    '2'
+    minute:  '0'
+  'crontab 2':
+    command: 'test2'
+    user:    'root'
+    hour:    '*'
+    minute:  '*'
+  'crontab 3':
+    command: 'test2'
+    user:    'root'
+    minute:  '1'
+    hour:    '2'
+    monthday:    '3'
+    month:   '4'
+    weekday: '5'

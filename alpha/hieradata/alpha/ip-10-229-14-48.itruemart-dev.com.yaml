@@ -1,0 +1,8 @@
+classes :
+  - apimanager
+
+apimanager::username: "apiadmin"
+apimanager::group: "apiadm"
+apimanager::component_name: "publisher-store"
+apimanager::package_java: "java-1.7.0-openjdk-devel"
+apimanager::package_java_version: "1.7.0.85-2.6.1.3.el6_7"

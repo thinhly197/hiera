@@ -1,0 +1,4 @@
+classes:
+  - nginx_wemall_notification_api
+  - php_phalcon_nginx_wemall
+  - notification-api_rpm

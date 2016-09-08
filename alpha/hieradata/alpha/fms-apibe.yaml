@@ -1,0 +1,4 @@
+classes:
+  - fms-api_rpm
+  - fms-services_rpm
+  - fms-printservice_rpm

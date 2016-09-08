@@ -1,0 +1,63 @@
+classes:
+  - nginx
+  - php_phalcon_nginx_wemall
+  - healthcheck_rpm
+
+
+#########################
+## Config Nginx version
+#########################
+nginx::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+#################
+## Config VHost
+#################
+nginx::nginx_vhosts:
+  'alpha-healthcheck.itruemart-dev.com':
+    www_root: '$root_path'
+    use_default_location: false
+    access_log: '/var/log/alpha-healthcheck-service.itruemart-dev.com.access.log'
+    error_log: '/var/log/alpha-healthcheck-service.itruemart-dev.com.log'
+    vhost_cfg_append:
+      'set': '$root_path 	/var/www/itruemart/healthcheck-service/public'
+      'sendfile': 'off'
+      'try_files': '$uri $uri/ @rewrite'
+      'set_real_ip_from': '10.229.12.0/22'
+      'real_ip_header': 'X-Forwarded-For'
+      'real_ip_recursive': 'on'
+      'client_max_body_size': '1m'
+
+nginx::nginx_locations:
+  'healthcheck-02':
+    vhost: 'alpha-healthcheck.itruemart-dev.com'
+    location: '/nginx_status'
+    location_custom_cfg:
+      'stub_status': 'on'
+      'access_log': 'off'
+      'allow' : 'all'
+
+  'healthcheck-03':
+    vhost: 'alpha-healthcheck.itruemart-dev.com'
+    location: '@rewrite'
+    location_custom_cfg:
+      'add_header': 
+        - '''Access-Control-Allow-Origin'' "*"'
+        - '''Access-Control-Allow-Credentials'' ''false'''
+        - '''Access-Control-Allow-Methods'' ''GET, POST, PUT, DELETE, OPTIONS'''
+        - '''Access-Control-Allow-Headers'' ''X-Wm-Accesstoken, X-Wm-Anonymousid, Cache-Control, Origin, X-Requested-With, Content-Range, Content-Disposition, Content-Type, Access-Token'''
+      'if ($request_method = ''OPTIONS'')': '{ return 204; } rewrite ^/(.*)$ /index.php?_url=/$1'
+
+  'healthcheck-service-04':
+    vhost: 'alpha-healthcheck.itruemart-dev.com'
+    location: '~ \.php$'
+    location_custom_cfg:
+      'root': '$root_path'
+      'include': '/etc/nginx/fastcgi_params'
+      'fastcgi_index': 'index.php'
+      'fastcgi_split_path_info': '^(.+\.php)(/.*)$'
+      'fastcgi_pass': '127.0.0.1:9000'
+      'fastcgi_param':
+        - 'ENVIRONMENT ALPHA'
+        - 'PATH_INFO $fastcgi_path_info'
+        - 'PATH_TRANSLATED $document_root$fastcgi_path_info'
+        - 'SCRIPT_FILENAME $document_root$fastcgi_script_name'

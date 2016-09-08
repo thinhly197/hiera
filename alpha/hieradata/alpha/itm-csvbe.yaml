@@ -1,0 +1,41 @@
+classes:
+  - nginx_itruemart_cache_service
+  - php_phalcon_nginx_wemall_cache_service
+  - cache-service_rpm
+  - logrotate
+  - loggly::rsyslog
+
+
+#########################
+## Config Nginx version 
+#########################
+nginx_wemall_general_api::package_name: 'nginx-1.8.0-1.el6.ngx'
+
+#############################################
+## Config Loggly
+#############################################
+loggly::rsyslog::enable_loggly: 'false'
+loggly::rsyslog::customer_token: '2f429413-43f1-4b53-bf2b-35f12163bace'
+loggly::rsyslog::tag_env: 'alpha'
+loggly::rsyslog::logfiles: 
+    'itm-csvbe_application.log':
+        enable_monitor: 'false'
+        logname:  'itm-csvbe-application.log'
+        filepath: '/data/log/itm-csvbe/application.log'
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'application_log':
+        path: '/data/log/itm-csvbe/*.log'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        postrotate: '/etc/init.d/php-fpm reload > /dev/null'
+        # prerotate: 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then
+        #                 run-parts /etc/logrotate.d/httpd-prerotate;
+        #             fi;'

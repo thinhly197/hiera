@@ -1,0 +1,13 @@
+classes:
+  - activemq_rpm
+
+activemq_rpm::BROKERNAME: 'dts_amq2'
+activemq_rpm::DTS_QUEUES_NAME: 'DTS.DB_QUEUE'
+activemq_rpm::STORAGE_USAGE: '100'
+activemq_rpm::STORAGE_TEMP: '50'
+activemq_rpm::JDBC_DRIVER: 'com.mysql.jdbc.Driver'
+activemq_rpm::JDBC_URL: 'localhost'
+activemq_rpm::POOL_MIN: '12'
+activemq_rpm::POOL_MAX: '40'
+activemq_rpm::POOL_IDLETIME '3600'
+activemq_rpm::STOMP_URL: 'localhost'

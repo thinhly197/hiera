@@ -1,0 +1,38 @@
+classes:
+  - users::monitor
+# - localyumrepo
+  - basenode
+  - security
+  - ntp
+  - timezone
+
+################################
+## Config parameters for Users 
+################################
+users::monitor::user_list:
+  - monitor
+
+################################
+## Config NTP Server & TimeZone 
+################################
+
+ntp::servers: ['0.amazon.pool.ntp.org iburst','1.amazon.pool.ntp.org iburs','2.amazon.pool.ntp.org iburst','3.amazon.pool.ntp.org iburst']
+timezone::timezone: 'Asia/Bangkok'
+
+
+###################################
+## Config parameters for yum repo 
+###################################
+localyumrepo::assign_name: 'iTrueMart'
+localyumrepo::assign_baseurl: 'https://s3-ap-southeast-1.amazonaws.com/itruemart/'
+
+localyumrepo::assign_name2: 'iTrueMart_inhouse'
+#localyumrepo::assign_baseurl2: 'https://s3-ap-southeast-1.amazonaws.com/itruemart-inhouse/'
+localyumrepo::assign_baseurl2: 'http://repository.itruemart-dev.com/itruemart_inhouse/'
+
+localyumrepo::assign_name3: 'Wemall_inhouse'
+#localyumrepo::assign_baseurl3: 'https://s3-ap-southeast-1.amazonaws.com/wemall-inhouse/'
+localyumrepo::assign_baseurl3: 'http://repository.itruemart-dev.com/wemall_inhouse/'
+
+localyumrepo::assign_name4: 'fms_inhouse'
+localyumrepo::assign_baseurl4: 'https://s3-ap-southeast-1.amazonaws.com/repo.aden-master.local/'

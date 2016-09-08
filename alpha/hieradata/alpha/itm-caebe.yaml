@@ -1,0 +1,7 @@
+classes:
+  - memcached
+
+###########################
+## Memcached Configuration
+###########################
+memcached::package_name: 'memcached-1.4.21-1.el6.remi'

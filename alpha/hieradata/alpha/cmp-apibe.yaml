@@ -1,0 +1,64 @@
+classes:
+  - java
+  - tomcat8
+  - campaign-api_rpm
+  - nginx_wemall_campaign_apibe
+  - logrotate
+  - fluentd
+  - fluentd::s3
+  - fluentd::elasticsearch
+
+#############################################
+## Config Logrotate
+#############################################
+logrotate::rule:
+    'catalina_log':
+        path: '/opt/apache-tomcat/apache-tomcat-8.0.23/logs/catalina.out'
+        rotate: 7
+        rotate_every: 'day'
+        compress: true
+        ifempty: false
+        create: false
+        dateext: true
+        dateformat:  '-%Y%m%d'
+        size: 20M
+        missingok: true
+        copytruncate: true
+
+##########################
+##      real ip         ##
+########################## 
+nginx_wemall_campaign_apibe::config::set_real_ip_from: '10.229.12.0/22'
+nginx_wemall_campaign_apibe::config::real_ip_header: 'X-Forwarded-For'
+nginx_wemall_campaign_apibe::config::real_ip_recursive: 'on'
+
+#############################################
+## Config Fluentd
+#############################################
+fluentd::enable: 'true'
+fluentd::s3::enable: 'true'
+fluentd::s3::aws_key_id: 'AKIAI67SEOOADK2GFHPA'
+fluentd::s3::aws_sec_key: 'uWTcDM+vWdPhuq1tlm63kauUbeeqf2fnJvH+Ek2H'
+fluentd::s3::s3_region: 'ap-southeast-1'
+fluentd::s3::s3_bucket: 'alpha.wms.log'
+fluentd::s3::working_dir: '/var/log/td-agent'
+fluentd::s3::service_group: 'cmp.apibe/audit'
+fluentd::s3::s3_config:
+    's3.cmp.apibe.access.log':
+        tag: 's3.cmp.apibe.access.log'
+        service_group: 'cmp.apibe/log'
+        filepath: '/data/log/cmp/application.log'
+        ensure: 'file'
+fluentd::elasticsearch::enable: 'true'
+fluentd::elasticsearch::working_dir: '/var/log/td-agent'
+fluentd::elasticsearch::es_host: 'search-itm-alpha-search-yms66r47nxiztv6pueomztr564.ap-southeast-1.es.amazonaws.com'
+fluentd::elasticsearch::es_port: '443'
+fluentd::elasticsearch::es_scheme: 'https'
+fluentd::elasticsearch::index_prefix: 'itruemart'
+fluentd::elasticsearch::es_config:
+    'es.cmp.apibe.access.log':
+        tag: 'es.cmp.apibe.access.log'
+        filepath: '/data/log/cmp/application.log'
+        ensure: 'file'
+        grok_pattern: 'ITMLOG'
+

@@ -1,0 +1,4 @@
+classes:
+  - nginx_wemall_api_portal
+  - php_phalcon_nginx_wemall
+  - portal-api_rpm
